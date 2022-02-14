@@ -14,6 +14,9 @@ class ViewController: UIViewController {
     @IBOutlet var slider: UISlider!
     @IBOutlet var textField: UITextField!
     @IBOutlet var doneButton: UIButton!
+    @IBOutlet var datePicker: UIDatePicker!
+    @IBOutlet var hideAllElements: UISwitch!
+    @IBOutlet var switchLable: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +39,14 @@ class ViewController: UIViewController {
 
         mainLable.text = String(slider.value)
         
+        //Setup date pocker
+        datePicker.locale = Locale(identifier: "ru_RU")
+        
+        //Локализация в соответсвие с текущими настройками системы
+        // datePicker.locale = Locale.current
+        
+        hideAllElements.onTintColor = .red
+        switchLable.text = "Hide all elements"
     }
 
     @IBAction func changeSegmente() {
@@ -70,6 +81,27 @@ class ViewController: UIViewController {
             textField.text = nil
         }
     }
+    @IBAction func chngeDate() {
+        let dateFormater = DateFormatter()
+        dateFormater.dateStyle = .medium
+        dateFormater.locale = Locale(identifier: "ru_RU")
+        
+        let dateValue = dateFormater.string(from: datePicker.date)
+        mainLable.text = dateValue
+        
+
+    }
+
+    @IBAction func switchAction() {
+        segmentedControl.isHidden.toggle()
+        mainLable.isHidden.toggle()
+        slider.isHidden.toggle()
+        textField.isHidden.toggle()
+        doneButton.isHidden.toggle()
+        datePicker.isHidden.toggle()
+        
+        switchLable.text = hideAllElements.isOn ?  "View all elements" :"Hide all elements"
+    }
     
 }
 
@@ -89,4 +121,5 @@ extension ViewController {
         
         present(alert, animated: true)
     }
+    
 }
